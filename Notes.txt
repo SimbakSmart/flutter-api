@@ -7,6 +7,8 @@ php artisan serve
 
 php artisan make:model Cateorgy  -m
 
+
+
 php artisan list
 
 php artisan migrate
@@ -18,6 +20,8 @@ php artisan migrate
 
 
   php artisan make:controller Api/CategoryController --resource --api --model=Category
+
+   php artisan make:controller Api/TransactionController --resource --api --model=Transaction
 
 
 

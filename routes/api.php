@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::get('categories',[\App\Http\Controllers\Api\CategoryController::class,'index']);
 //Route::get('categories', [CategoryController::class, 'index']);
 Route::apiResource('categories',CategoryController::class);
+
+Route::apiResource('transactions',TransactionController::class);

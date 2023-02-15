@@ -63,7 +63,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // http://localhost:8000/api/categories
+    // http://localhost:8000/api/categories/1
     public function destroy(Category $category)
     {
          $category->delete();
