@@ -30,8 +30,15 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    //http://localhost:8000/api/categories/1
+    public function show($id)
     {
+           $category = Category::find($id);
+
+           if(!$category){
+             abort(404,'Category Not Found');
+           }
+
         return new CategoryResource($category);
     }
 
