@@ -1,6 +1,8 @@
 
 create-project laravel/laravel flutter-api
 
+php artisan --version
+
 php artisan serve
 
 php artisan make:model Cateorgy  -m
@@ -31,6 +33,8 @@ public function boot(): void
         JsonResource::withoutWrapping();
     }
 ********************** PARA MODIFICAR EL NOT format_underlined
+
+Handler
  public function register(): void
     {
         // $this->reportable(function (Throwable $e) {
