@@ -99,3 +99,12 @@ CREAR MODEL FACTORY Y CONTROLADOR
 GENERAR RESOURCE  PARA ENTREGA DE DATA
 
  php artisan make:resource NombreResource
+
+
+
+***********************LOGIN AUTH ******************************
+composer require laravel/sanctum
+
+
+php artisan tinker
+User::create(['email'=>'admin@admin.com','password'=>bcrypt('12345678'),'name'=>'Admin']);
