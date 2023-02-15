@@ -13,6 +13,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
+    //http://localhost:8000/api/categories
     public function index()
     {
         return CategoryResource::collection(Category::select('id','name')->get());
@@ -21,7 +22,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
         //
     }
@@ -29,15 +30,15 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category): Response
+    public function show(Category $category)
     {
-        //
+        return new CategoryResource($category);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category): Response
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -45,7 +46,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category): Response
+    public function destroy(Category $category)
     {
         //
     }
