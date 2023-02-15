@@ -1,0 +1,82 @@
+
+create-project laravel/laravel flutter-api
+
+php artisan serve
+
+php artisan make:model Cateorgy  -m
+
+php artisan list
+
+php artisan migrate
+
+
+ php artisan tinker
+
+  Category::create(['name'=>'First']);
+
+
+  php artisan make:controller Api/CategoryController --resource --api --model=Category
+
+
+
+  *************PLUGGINS PARA php
+PHP Intelephense
+PHP Namespace Resolver
+
+
+***************Para quitar data de json
+AppServiceProvider
+public function boot(): void
+    {
+        JsonResource::withoutWrapping();
+    }
+
+
+
+/*********************************MAS NOTAS*////////////////////////
+
+
+CORRER SERVIDOR EN COMPOSER
+
+
+– php artisan serve
+
+
+
+CORRER SERVIDOR SIN COMPOSER
+
+– php -S localhost:8000
+– php -S localhost:8000 -t foo/
+– php -S localhost:8000 router.php
+
+
+PHP  COMANDOS LARAVEL
+
+MENÚ DE AYUDA
+
+– php artisan -h
+
+VERSIÓN DE LARAVEL
+
+– php artisan –version
+
+LISTAR COMANDOS DE ARTISAN & COMPOSER
+– php artisan list
+
+
+
+CORRER SEED DE MIGRACIONES
+– php artisan migrate:fresh –seed
+
+o
+– php artisan db:seed
+
+
+CREAR MODEL FACTORY Y CONTROLADOR
+
+– php artisan make:model nombre_model -mfc
+
+
+GENERAR RESOURCE  PARA ENTREGA DE DATA
+
+ php artisan make:resource NombreResource
