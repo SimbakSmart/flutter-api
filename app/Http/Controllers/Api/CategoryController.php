@@ -52,16 +52,22 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    //http://localhost:8000/api/categories/1
+    public function update(StoreCategoryRequest $request, Category $category)
     {
-        //
+        $category->update($request->validated());
+
+        return new CategoryResource($category);
     }
 
     /**
      * Remove the specified resource from storage.
      */
+    // http://localhost:8000/api/categories
     public function destroy(Category $category)
     {
-        //
+         $category->delete();
+
+         return response()->noContent();
     }
 }
