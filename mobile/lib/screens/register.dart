@@ -39,6 +39,13 @@ class _RegisterState extends State<Register> {
                 child: Column(
                   children: <Widget>[
                     TextField(
+                      keyboardType: TextInputType.text,
+                      decoration:InputDecoration(
+                          labelText: 'Name'
+                      ) ,
+                    ),
+
+                    TextField(
                       keyboardType: TextInputType.emailAddress,
                       decoration:InputDecoration(
                           labelText: 'Email'
@@ -51,8 +58,17 @@ class _RegisterState extends State<Register> {
                           labelText: 'Password'
                       ) ,
                     ),
+
+                    TextField(
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration:InputDecoration(
+                          labelText: 'Password confirmation'
+                      ) ,
+                    ),
                     ElevatedButton(
-                      onPressed: ()=>print("login"),
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/categories');
+                      },
                       child: Text('Login'),
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size(double.infinity,36)

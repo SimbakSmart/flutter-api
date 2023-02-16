@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:mobile/screens/categories.dart';
 import 'package:mobile/screens/login.dart';
 import 'package:mobile/screens/register.dart';
 
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       home: Login(),
       routes:{
         '/login':(context) => Login(),
-        '/register':(context)=>Register()
+        '/register':(context)=>Register(),
+        '/categories':(context)=>Categories()
       },
 
     );
