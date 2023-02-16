@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreTransactionRequest extends FormRequest
 {
@@ -30,7 +31,10 @@ class StoreTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id'=>'required',
+            //'category_id'=>'required|exists:categories',
+            'category_id'=>['required',
+              Rule::exists('categories','id')->where('user_id',auth()->id())
+            ],
             'amount'=>'required',
             'description'=>'required',
             'transaction_date'=>'required|date'
