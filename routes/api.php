@@ -37,6 +37,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::apiResource('transactions',TransactionController::class);
 });
 
+
+
 // Route::post('/sanctum/token', function (Request $request) {
 //     $request->validate([
 //         'email' => 'required|email',
