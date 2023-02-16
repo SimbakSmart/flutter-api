@@ -108,3 +108,10 @@ composer require laravel/sanctum
 
 php artisan tinker
 User::create(['email'=>'admin@admin.com','password'=>bcrypt('12345678'),'name'=>'Admin']);
+
+
+///GENERAR RELACIONES
+ php artisan  make:migration add_user_id_to_transaction__table
+ php artisan  make:migration add_user_id_to_transaction_table
+
+ php artisan migrate
