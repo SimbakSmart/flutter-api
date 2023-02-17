@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/provider/AuthProvider.dart';
 import 'package:mobile/provider/CategoryProvider.dart';
+import 'package:mobile/provider/TransactionProvider.dart';
 import 'package:mobile/screens/categories.dart';
 import 'package:mobile/screens/home.dart';
 import 'package:mobile/screens/login.dart';
@@ -15,15 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
 
-    // return MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider<CategoryProvider>
-    //     (create: (context)=>CategoryProvider()),
-    //     ChangeNotifierProvider<AuthProvider>
-    //       (create: (context)=>AuthProvider()),
-    //   ],
  return ChangeNotifierProvider(
    create: (context)=>AuthProvider(),
    child: Consumer<AuthProvider>(builder: (context,authProvider,child){
@@ -31,6 +24,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<CategoryProvider>
           (create: (context)=>CategoryProvider(authProvider)),
+        ChangeNotifierProvider<TransactionProvider>(
+            create: (context) => TransactionProvider(authProvider))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
