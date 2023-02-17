@@ -3,24 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile/services/api.dart';
+import 'package:mobile/widget/category_edit.dart';
 
-class Category {
-  int id;
-  String name;
+import '../models/category.dart';
 
-  Category({required this.id, required this.name});
-
-  factory Category.fromJson(Map<String, dynamic> json) {
-   return Category( id :json['id'],name : json['name']);
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    return data;
-  }
-}
 
 class Categories extends StatefulWidget {
 
@@ -44,43 +31,15 @@ class _CategoriesState extends State<Categories> {
   final String category="My Categories";
 
   late Future<List<Category>> futureCategories;
-  final _formKey = GlobalKey<FormState>();
-  late Category selectedCategory;
-  final categoryNameController = TextEditingController();
+   ApiServices apiServices = new ApiServices();
 
- Future<List<Category>> fetchCategories() async{
 
-     http.Response response = await http.get(
-      // Uri.parse('http://flutter-api.test/api/categories')
-         Uri.parse('http://172.16.155.127/flutter-api/public/api/categories')
-     );
-     List categories = jsonDecode(response.body);
 
-     return categories.map((category) => Category.fromJson(category)).toList();
-  }
-
-  Future saveCategory() async{
-   final form = _formKey.currentState;
-   if(!form!.validate()){
-     return;
-   }
-
-   String uri ='http://172.16.155.127/flutter-api/public/api/categories/'+selectedCategory.id.toString();
-   await http.put(
-     Uri.parse(uri),
-     headers: {
-       HttpHeaders.contentTypeHeader:'application/json',
-       HttpHeaders.acceptHeader:'application/json'
-     },
-     body: jsonEncode({'name':categoryNameController.text})
-   );
-  Navigator.pop(context);
-  }
 
   @override
   void initState() {
     super.initState();
-    futureCategories = fetchCategories();
+    futureCategories = apiServices.fetchCategories();
   }
 
   @override
@@ -96,7 +55,7 @@ class _CategoriesState extends State<Categories> {
         title: Text('Categories clicked '+clicked.toString()),
       ),
      body: Container(
-       color: Theme.of(context).primaryColorDark,
+       color: Theme.of(context).primaryColorLight,
        child: FutureBuilder<List<Category>>(
      future: futureCategories,
       builder: (context,snapshot){
@@ -110,37 +69,10 @@ class _CategoriesState extends State<Categories> {
            trailing: IconButton(
              icon: Icon(Icons.edit),
              onPressed: (){
-               selectedCategory =category;
-               categoryNameController.text = category.name;
-            showModalBottomSheet(context: context, builder: (builder){
-              return Padding(
-                  padding:EdgeInsets.all(10),
-                  child:Form(
-                    key: _formKey,
-                    child:
-                      Column(
-                        children: [
-                          TextFormField(
-                            controller: categoryNameController,
-                           // initialValue: category.name,
-                            validator: (String? value){
-                              if(value!.isEmpty){
-                                return 'Enter Category Name';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Category Name'
-                            ),
-                          ),
-                          ElevatedButton(
-                             child: Text('Save'),
-                              onPressed:()=> saveCategory())
-                        ],
-                      ),
-
-                  ) ,);
+            showModalBottomSheet(
+                isScrollControlled: true,
+                context: context, builder: (builder){
+              return CategoryEdit(category);
 
             });
 
