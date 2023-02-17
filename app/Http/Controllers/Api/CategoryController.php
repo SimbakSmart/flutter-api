@@ -29,13 +29,18 @@ class CategoryController extends Controller
 
     //     "name": "Second"
     // }
-    public function store(StoreCategoryRequest $request)
+    // public function store(StoreCategoryRequest $request)
+    // {
+    //    $category = auth()->user()->categories()->create($request->validated());
+
+    //     //   $category = Category::create($request->validated()+['user_id'=>auth()->id()]);
+
+    //     return new CategoryResource($category);
+    // }
+
+      public function store(StoreCategoryRequest $request)
     {
-       $category = auth()->user()->categories()->create($request->validated());
-
-        //   $category = Category::create($request->validated()+['user_id'=>auth()->id()]);
-
-        return new CategoryResource($category);
+      return new CategoryResource(Category::create($request->validated()));
     }
 
     /**

@@ -59,7 +59,25 @@ class ApiServices{
     }
 
 
+  Future<Category> addCategory(String name) async{
 
+
+    String uri =baseUrl+'categories';
+    http.Response response  = await http.post(
+        Uri.parse(uri),
+        headers: {
+          HttpHeaders.contentTypeHeader:'application/json',
+          HttpHeaders.acceptHeader:'application/json'
+        },
+        body: jsonEncode({'name':name})
+    );
+
+    if(response.statusCode != 201){
+
+      throw Exception('Error happened on create');
+    }
+    return Category.fromJson(jsonDecode(response.body));
+  }
 
 
 }

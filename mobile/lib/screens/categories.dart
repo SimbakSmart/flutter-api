@@ -7,6 +7,7 @@ import 'package:mobile/widget/category_edit.dart';
 import 'package:provider/provider.dart';
 
 import '../models/category.dart';
+import '../widget/category_add.dart';
 
 
 class Categories extends StatefulWidget {
@@ -93,7 +94,20 @@ class _CategoriesState extends State<Categories> {
              ],
            ),
          );
-        }));
+        }),
+      floatingActionButton: new FloatingActionButton(
+        onPressed:(){
+          showModalBottomSheet(
+              isScrollControlled: true,
+              context: context, builder: (builder){
+            return CategoryAdd(provider.addCategory);
+
+          });
+
+        },
+        child: Icon(Icons.add) ,
+      ),
+    );
   }
 
   Future deleteCategory(Function callback, Category category) async{
