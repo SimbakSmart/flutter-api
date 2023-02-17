@@ -49,19 +49,55 @@ class _CategoriesState extends State<Categories> {
            Category category = categories[index];
          return ListTile(
           title:  Text(category.name),
-           trailing: IconButton(
-             icon: Icon(Icons.edit),
-             onPressed: (){
-            showModalBottomSheet(
-                isScrollControlled: true,
-                context: context, builder: (builder){
-              return CategoryEdit(category,provider.updateCategory);
+           trailing: Row(
+             mainAxisSize: MainAxisSize.min,
+             children: [
+               IconButton(
+                 icon: Icon(Icons.edit),
+                 onPressed: (){
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context, builder: (builder){
+                  return CategoryEdit(category,provider.updateCategory);
 
-            });
+                });
 
-             },
+                 },
+               ),
+
+               IconButton(
+                 icon: Icon(Icons.delete),
+                 onPressed: (){
+                  showDialog(
+                      context: context,
+                      builder: (context){
+
+                        return AlertDialog(
+                          title: Text('Confirmation'),
+                          content: Text('Are you sure you want to delete'),
+
+                          actions: [
+                            TextButton(
+                                onPressed: ()=> deleteCategory(provider.deleteCategory, category),
+                                child: Text('Confirm')),
+                            TextButton(
+                                onPressed: ()=> Navigator.pop(context),
+                                child: Text('Cancel'))
+                          ],
+                        );
+
+                      });
+
+                 },
+               ),
+             ],
            ),
          );
         }));
+  }
+
+  Future deleteCategory(Function callback, Category category) async{
+    await callback(category);
+    Navigator.pop(context);
   }
 }
