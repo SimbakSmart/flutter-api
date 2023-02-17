@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:mobile/provider/AuthProvider.dart';
 import 'package:mobile/provider/CategoryProvider.dart';
 import 'package:mobile/screens/categories.dart';
+import 'package:mobile/screens/home.dart';
 import 'package:mobile/screens/login.dart';
 import 'package:mobile/screens/register.dart';
 import 'package:provider/provider.dart';
@@ -16,22 +17,44 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
 
+    // return MultiProvider(
+    //   providers: [
+    //     ChangeNotifierProvider<CategoryProvider>
+    //     (create: (context)=>CategoryProvider()),
+    //     ChangeNotifierProvider<AuthProvider>
+    //       (create: (context)=>AuthProvider()),
+    //   ],
+ return ChangeNotifierProvider(
+   create: (context)=>AuthProvider(),
+   child: Consumer<AuthProvider>(builder: (context,authProvider,child){
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<CategoryProvider>
-        (create: (context)=>CategoryProvider())
+          (create: (context)=>CategoryProvider()),
+        ChangeNotifierProvider<AuthProvider>
+          (create: (context)=>AuthProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Welcome to Flutter',
-        home: Login(),
+      //  home: Login(),
         routes:{
+          '/':(context){
+      final authProvider  = Provider.of<AuthProvider>(context);
+      if(authProvider.isAuthenticate){
+        return Home();
+      }else{
+        return Login();
+      }
+
+          },
           '/login':(context) => Login(),
           '/register':(context)=>Register(),
           '/categories':(context)=>Categories()
         },
 
       ),
+    );})
     );
   }
 }
