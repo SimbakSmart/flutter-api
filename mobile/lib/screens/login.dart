@@ -138,16 +138,7 @@ class _LoginState extends State<Login> {
 
     try{
 
-      // String token = await provider.register(
-      //     nameController.text,
-      //     emailController.text,
-      //     passworController.text,
-      //     passworConfirmController.text,
-      //     deviceName);
-
-      // Navigator.pop(context);
-
-      String token = await provider.login(
+        await provider.login(
           emailController.text,
           passworController.text,
           deviceName);

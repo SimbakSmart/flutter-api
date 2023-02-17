@@ -19,7 +19,6 @@ class _CategoryEditState extends State<CategoryEdit> {
   final _formKey = GlobalKey<FormState>();
   late Category selectedCategory;
   final categoryNameController = TextEditingController();
-  ApiServices apiServices = new ApiServices();
   String errorMessage='';
 
   @override

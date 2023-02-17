@@ -4,15 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:mobile/services/api.dart';
 
 import '../models/category.dart';
+import 'AuthProvider.dart';
 
 class CategoryProvider extends ChangeNotifier{
 
   List<Category> categories=[];
-
   late ApiServices apiServices;
+  late AuthProvider authProvider;
 
-  CategoryProvider(){
-    this.apiServices = ApiServices();
+
+  CategoryProvider(AuthProvider authProvider){
+
+    this.authProvider = authProvider;
+    this.apiServices = ApiServices(authProvider.token);
     init();
   }
 
@@ -31,6 +35,7 @@ class CategoryProvider extends ChangeNotifier{
       notifyListeners();
     }catch(Exception){
        print(Exception);
+       await authProvider.logOut();
     }
   }
 
@@ -42,6 +47,7 @@ class CategoryProvider extends ChangeNotifier{
 
     }catch(Exception){
       print(Exception);
+      await authProvider.logOut();
     }
   }
 
@@ -56,6 +62,7 @@ class CategoryProvider extends ChangeNotifier{
       notifyListeners();
     }catch(Exception){
       print(Exception);
+      await authProvider.logOut();
     }
   }
 

@@ -167,7 +167,7 @@ late String deviceName;
 
     try{
 
-      String token = await provider.register(
+     await provider.register(
          nameController.text,
           emailController.text,
           passworController.text,

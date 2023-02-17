@@ -30,9 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<CategoryProvider>
-          (create: (context)=>CategoryProvider()),
-        ChangeNotifierProvider<AuthProvider>
-          (create: (context)=>AuthProvider()),
+          (create: (context)=>CategoryProvider(authProvider)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
           '/':(context){
       final authProvider  = Provider.of<AuthProvider>(context);
       if(authProvider.isAuthenticate){
-        return Home();
+        return Categories();
       }else{
         return Login();
       }

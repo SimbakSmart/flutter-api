@@ -9,16 +9,24 @@ import '../models/category.dart';
 
 class ApiServices{
 
+  late String token;
+
 //  final String baseUrl='http://flutter-api.test/api/';
   final String baseUrl='http://172.16.155.127/flutter-api/public/api/';
-   ApiServices();
+   ApiServices(String token){
+     this.token = token;
+   }
 
    Future<List<Category>> fetchCategories() async{
 
      http.Response response = await http.get(
-       // Uri.parse('http://flutter-api.test/api/categories')
-         Uri.parse(baseUrl+'categories')
+       Uri.parse(baseUrl + 'categories'),
+       headers: {
+         HttpHeaders.acceptHeader: 'application/json',
+         HttpHeaders.authorizationHeader: 'Bearer $token'
+       },
      );
+
      List categories = jsonDecode(response.body);
 
      return categories.map((category) => Category.fromJson(category)).toList();
@@ -32,7 +40,8 @@ class ApiServices{
          Uri.parse(uri),
          headers: {
            HttpHeaders.contentTypeHeader:'application/json',
-           HttpHeaders.acceptHeader:'application/json'
+           HttpHeaders.acceptHeader:'application/json',
+           HttpHeaders.authorizationHeader: 'Bearer $token'
          },
          body: jsonEncode({'name':category.name})
      );
@@ -49,7 +58,13 @@ class ApiServices{
 
       String uri =baseUrl+'categories/'+id.toString();
 
-      http.Response response  = await http.delete(Uri.parse(uri));
+      http.Response response = await http.delete(
+        Uri.parse(uri),
+        headers: {
+          HttpHeaders.acceptHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token'
+        },
+      );
 
       if(response.statusCode != 204){
 
@@ -67,7 +82,8 @@ class ApiServices{
         Uri.parse(uri),
         headers: {
           HttpHeaders.contentTypeHeader:'application/json',
-          HttpHeaders.acceptHeader:'application/json'
+          HttpHeaders.acceptHeader:'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token'
         },
         body: jsonEncode({'name':name})
     );

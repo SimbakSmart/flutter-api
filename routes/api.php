@@ -32,12 +32,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
  Route::group(['middleware'=>'auth:sanctum'],function(){
-  //  Route::apiResource('categories',CategoryController::class);
+   Route::apiResource('categories',CategoryController::class);
 
     Route::apiResource('transactions',TransactionController::class);
 });
 
-  Route::apiResource('categories',CategoryController::class);
+ // Route::apiResource('categories',CategoryController::class);
 
 
 // Route::post('/sanctum/token', function (Request $request) {
