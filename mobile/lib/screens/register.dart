@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile/provider/AuthProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,11 +23,14 @@ final emailController= TextEditingController();
 final passworController= TextEditingController();
 final passworConfirmController = TextEditingController();
 String errorMessage ='';
+late String deviceName;
 
 
   @override
   void initState() {
     super.initState();
+
+    getDeviceName();
   }
 
   @override
@@ -165,17 +172,44 @@ String errorMessage ='';
           emailController.text,
           passworController.text,
           passworConfirmController.text,
-          'some device name');
+          deviceName);
 
       Navigator.pop(context);
 
     }catch(Exception){
        setState(() {
-         errorMessage = Exception.toString();
+         errorMessage = Exception.toString().replaceAll('Exception:', '');
        });
     }
 
   }
 
+  Future<void> getDeviceName() async{
+
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    try{
+      if(Platform.isAndroid){
+        var build = await deviceInfoPlugin.androidInfo;
+        setState(() {
+
+          deviceName = build.model;
+        });
+      }
+      else if(Platform.isIOS){
+        var build = await deviceInfoPlugin.iosInfo;
+        setState(() {
+
+          deviceName = build.model!;
+        });
+      }
+
+    } on PlatformException{
+
+      setState(() {
+
+        deviceName = 'Failed to get platform version';
+      });
+    }
+}
 
 }

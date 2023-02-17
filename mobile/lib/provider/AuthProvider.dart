@@ -19,4 +19,13 @@ class AuthProvider extends ChangeNotifier{
        notifyListeners();
        return token;
    }
+
+
+ Future<String> login(String email,String password,String deviceName) async{
+
+   String token = await apiServices.login(email, password, deviceName);
+   isAuthenticate= true;
+   notifyListeners();
+   return token;
+ }
 }

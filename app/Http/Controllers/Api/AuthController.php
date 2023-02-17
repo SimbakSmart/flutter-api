@@ -31,7 +31,8 @@ class AuthController extends Controller
         //     'token' => $user->createToken('API Token')->plainTextToken
         // ]);
 
-        return $user->createToken('API Token')->plainTextToken;
+        //return $user->createToken('API Token')->plainTextToken;
+         return $user->createToken($request['device_name'])->plainTextToken;
     }
     // public function register(Request $request)
     // {
