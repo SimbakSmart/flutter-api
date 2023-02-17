@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           '/':(context){
       final authProvider  = Provider.of<AuthProvider>(context);
       if(authProvider.isAuthenticate){
-        return Categories();
+        return Home();
       }else{
         return Login();
       }

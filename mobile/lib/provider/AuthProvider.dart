@@ -32,7 +32,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> logOut() async {
     token='';
-    isAuthenticate = true;
+    isAuthenticate = false;
     notifyListeners();
   }
 
