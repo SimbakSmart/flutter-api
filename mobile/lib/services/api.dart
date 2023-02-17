@@ -24,17 +24,17 @@ class ApiServices{
      return categories.map((category) => Category.fromJson(category)).toList();
    }
 
-   Future<Category> updateCategory(id,name) async{
+   Future<Category> updateCategory(Category category) async{
 
 
-     String uri =baseUrl+'categories/'+id.toString();
+     String uri =baseUrl+'categories/'+category.id.toString();
       http.Response response  = await http.put(
          Uri.parse(uri),
          headers: {
            HttpHeaders.contentTypeHeader:'application/json',
            HttpHeaders.acceptHeader:'application/json'
          },
-         body: jsonEncode({'name':name})
+         body: jsonEncode({'name':category.name})
      );
 
       if(response.statusCode != 200){

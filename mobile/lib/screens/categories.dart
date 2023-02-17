@@ -1,10 +1,10 @@
 
-import 'dart:convert';
-import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:mobile/provider/CategoryProvider.dart';
 import 'package:mobile/services/api.dart';
 import 'package:mobile/widget/category_edit.dart';
+import 'package:provider/provider.dart';
 
 import '../models/category.dart';
 
@@ -20,26 +20,11 @@ class Categories extends StatefulWidget {
 
 class _CategoriesState extends State<Categories> {
 
-  final List<String> categories =<String>[
-    'Category 1',
-    'Category 2',
-    'Category 3'
-  ];
-
-  int clicked =0;
-
-  final String category="My Categories";
-
-  late Future<List<Category>> futureCategories;
-   ApiServices apiServices = new ApiServices();
-
-
-
 
   @override
   void initState() {
     super.initState();
-    futureCategories = apiServices.fetchCategories();
+
   }
 
   @override
@@ -49,21 +34,19 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
+    final provider =  Provider.of<CategoryProvider>(context);
+    List<Category> categories = provider.categories;
+
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories clicked '+clicked.toString()),
+        title: Text('Categories'),
       ),
-     body: Container(
-       color: Theme.of(context).primaryColorLight,
-       child: FutureBuilder<List<Category>>(
-     future: futureCategories,
-      builder: (context,snapshot){
-       if(snapshot.hasData){
-         return ListView.builder(
-         itemCount: snapshot.data!.length,
+     body: ListView.builder(
+         itemCount: categories.length,
          itemBuilder: (context,index){
-           Category category = snapshot.data![index];
+           Category category = categories[index];
          return ListTile(
           title:  Text(category.name),
            trailing: IconButton(
@@ -72,22 +55,13 @@ class _CategoriesState extends State<Categories> {
             showModalBottomSheet(
                 isScrollControlled: true,
                 context: context, builder: (builder){
-              return CategoryEdit(category);
+              return CategoryEdit(category,provider.updateCategory);
 
             });
 
              },
            ),
          );
-        });
-
-    }else if(snapshot.hasError){
-         return Text('Something went wrong');
-    }
-       return CircularProgressIndicator();
-    }
-    )
-    )
-    );
+        }));
   }
 }

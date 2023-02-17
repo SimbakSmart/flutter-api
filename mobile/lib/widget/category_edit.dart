@@ -5,7 +5,8 @@ import '../services/api.dart';
 
 class CategoryEdit extends StatefulWidget {
   final Category category;
-  CategoryEdit(this.category);
+  final Function categoryCallback;
+  CategoryEdit(this.category,this.categoryCallback);
 
   @override
   _CategoryEditState createState() {
@@ -69,7 +70,7 @@ class _CategoryEditState extends State<CategoryEdit> {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red
                     ),
-                    child: Text('Cansel'),
+                    child: Text('Cancel'),
                     onPressed:()=> Navigator.pop(context)),
                 Text(errorMessage,style: TextStyle(color:Colors.red),)
               ],
@@ -87,13 +88,8 @@ class _CategoryEditState extends State<CategoryEdit> {
     if(!form!.validate()){
       return;
     }
-    apiServices.updateCategory(widget.category.id, categoryNameController.text)
-    .then((Category category)  => Navigator.pop(context))
-    .catchError((exception)=>{
-       setState((){
-          errorMessage =exception.toString();
-       })
-    });
-
+   widget.category.name = categoryNameController.text;
+    widget.categoryCallback(widget.category);
+    Navigator.pop(context);
   }
 }
